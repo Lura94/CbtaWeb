@@ -1,0 +1,44 @@
+CREATE TABLE IF NOT EXISTS `cbta`.`admin` (
+  `id_admin` INT NOT NULL,
+  `password` VARCHAR(50) NOT NULL,
+  `nControl` VARCHAR(20) NOT NULL,
+  `nombre` VARCHAR(50) NOT NULL,
+  `direccion` VARCHAR(50) NOT NULL,
+  `telefono` VARCHAR(15) NULL,
+  `correo` VARCHAR(45) NULL,
+ 
+  PRIMARY KEY (`id_admin`))
+ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS `cbta`.`alumnos` (
+  `id_alumno` INT NOT NULL AUTO_INCREMENT,
+  `nControl` VARCHAR(14) NOT NULL,
+  `nombre` VARCHAR(20) NOT NULL,
+  `aPaterno` VARCHAR(20) NOT NULL,
+  `aMaterno` VARCHAR(20) NOT NULL,
+  `grado` VARCHAR(3) NOT NULL,
+  `especialidad` VARCHAR(30) NOT NULL,
+  `grupo` VARCHAR(2) NOT NULL,
+  `curp` VARCHAR(20) NOT NULL,
+  `horasTotales` INT NOT NULL,
+  `password` VARCHAR(50) NOT NULL,
+  PRIMARY KEY (`id_alumno`))
+ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS `cbta`.`reportes` (
+  `id_reporte` INT NOT NULL AUTO_INCREMENT,
+  `id_alumno` INT NOT NULL,
+  `nombreDocente` VARCHAR(50) NOT NULL,
+  `motivo` VARCHAR(45) NOT NULL,
+  `descripcion` VARCHAR(200) NULL,
+  `fecha` DATE NOT NULL,
+  `hora` TIME NOT NULL,
+  `horasAsignadas` INT NOT NULL,
+  PRIMARY KEY (`id_reporte`),
+  INDEX `fk_reportes_alumnos_idx` (`id_alumno` ASC),
+  CONSTRAINT `fk_reportes_alumnos`
+    FOREIGN KEY (`id_alumno`)
+    REFERENCES `cbta`.`alumnos` (`id_alumno`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
